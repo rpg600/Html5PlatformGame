@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    padding-top: 50px;
+}
+
+canvas {
+    display: inline-block;
+    border: 1px solid black;
+}
+
+#appEngine {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    margin: 0 auto;
+    width: 1200px;
+}
+
+#gameView, img {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    display: inline-block;
+}
