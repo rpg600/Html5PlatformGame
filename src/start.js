@@ -1,4 +1,4 @@
-var FA = {
+var PG = {
     canvas: null,
     stage: null,
     stageContainer: null,
@@ -8,37 +8,38 @@ var FA = {
     players: [],
 
     tick: function() {
-        FA.stage.update();
+        PG.stage.update();
     }
 };
 
 window.onload = function() {
 
-    FA.canvas = document.getElementById('gameView');
-    FA.stage = new createjs.Stage(FA.canvas);
+    PG.canvas = document.getElementById('gameView');
+    PG.stage = new createjs.Stage(PG.canvas);
 
-    FA.stage.snapToPixelEnabled = true;
+    PG.stage.snapToPixelEnabled = true;
 
-    FA.canvas.width = 1200;
-    FA.canvas.height = 600;
+    PG.canvas.width = 1200;
+    PG.canvas.height = 600;
 
-    FA.stageContainer = new createjs.Container();
-    FA.stage.addChild(FA.stageContainer);
+    PG.stageContainer = new createjs.Container();
+    PG.stage.addChild(PG.stageContainer);
 
-    FA.plateFormContainer = new createjs.Container();
-    FA.platform1 = new createjs.Bitmap("images/plateforme_small.png");
-    FA.platform1.y = 270;
-    FA.plateFormContainer.addChild(FA.platform1);
-    FA.stageContainer.addChild(FA.plateFormContainer);
+    PG.plateFormContainer = new createjs.Container();
+    PG.platform1 = new createjs.Bitmap("images/plateforme_small.png");
+    PG.platform1.y = 270;
+    PG.plateFormContainer.addChild(PG.platform1);
+    PG.stageContainer.addChild(PG.plateFormContainer);
 
-    FA.player = new Player();
-    FA.players.push(FA.player);
+    PG.player = new Player();
+    PG.players.push(PG.player);
 
-    createjs.Ticker.addEventListener('tick', FA.tick);
+    createjs.Ticker.addEventListener('tick', PG.tick);
     createjs.Ticker.useRAF = true;
     createjs.Ticker.setFPS(24);
-};
 
+
+};
 
 document.onkeydown = function(event) {
     keyCode = event.keyCode;
@@ -46,16 +47,17 @@ document.onkeydown = function(event) {
         // left
         case 37:
             console.log('left')
-            FA.player.movePlayer('left', true)
+            PG.player.movePlayer('left', true)
             break;
         // right
         case 39:
             console.log('right')
-            FA.player.movePlayer('right', true)
+            PG.player.movePlayer('right', true)
             break;
         // up
         case 38:
             console.log('up')
+            PG.player.movePlayer('up', true)
             break;
         // down
         case 40:
@@ -78,16 +80,17 @@ document.onkeyup= function(event) {
         // left
         case 37:
             console.log('left')
-            FA.player.movePlayer('left', false)
+            PG.player.movePlayer('left', false)
             break;
         // right
         case 39:
             console.log('right')
-            FA.player.movePlayer('right', false)
+            PG.player.movePlayer('right', false)
             break;
         // up
         case 38:
             console.log('up')
+            PG.player.movePlayer('up', false)
             break;
         // down
         case 40:
