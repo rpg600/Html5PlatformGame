@@ -1,29 +1,35 @@
 var Player = function() {
+    this.lastDirection = 'right';
 
-    this.lastDirection = null;
-    this.spriteSheet_idle = new createjs.SpriteSheet({images: ["images/kisuke_idle_weapon.png"], frames: [[0,0,114,234,0,-85.3,102.55],[114,0,114,234,0,-85.3,102.55],[228,0,114,234,0,-85.3,102.55],[342,0,114,234,0,-85.3,102.55],[0,234,114,234,0,-85.3,102.55],[114,234,114,234,0,-85.3,102.55],[228,234,114,234,0,-85.3,102.55],[342,234,114,234,0,-85.3,102.55],[0,468,114,234,0,-85.3,102.55]]});
+    this.spriteSheet_idle = new createjs.SpriteSheet({
+        images: ["images/kisuke_idle_weapon.png"],
+        frames: [[0,0,114,234,0,-85.3,102.55],[114,0,114,234,0,-85.3,102.55],[228,0,114,234,0,-85.3,102.55],[342,0,114,234,0,-85.3,102.55],[0,234,114,234,0,-85.3,102.55],[114,234,114,234,0,-85.3,102.55],[228,234,114,234,0,-85.3,102.55],[342,234,114,234,0,-85.3,102.55],[0,468,114,234,0,-85.3,102.55]],
+        animations: { idle: [0, 8, "idle", 4] }
+    });
+
     this.idle = new createjs.BitmapAnimation(this.spriteSheet_idle);
-    this.idle.x = 400;
-    this.idle.y = 300;
     this.idle.regX = 140;
+    this.idle.regY = 68;
     this.idle.currentFrame = 0;
 
-    this.spriteSheet_run = new createjs.SpriteSheet({images: ["images/kisuke_run_weapon.png"], frames: [[0,0,189,217,0,108.5,86.65],[189,0,189,217,0,108.5,86.65],[378,0,189,217,0,108.5,86.65],[567,0,189,217,0,108.5,86.65],[756,0,189,217,0,108.5,86.65],[0,217,189,217,0,108.5,86.65],[189,217,189,217,0,108.5,86.65],[378,217,189,217,0,108.5,86.65],[567,217,189,217,0,108.5,86.65],[756,217,189,217,0,108.5,86.65],[0,434,189,217,0,108.5,86.65],[189,434,189,217,0,108.5,86.65]],
-        animations: { run: [0, 11, "run", null] }
+    this.spriteSheet_run = new createjs.SpriteSheet({
+        images: ["images/kisuke_run_weapon.png"],
+        frames: [[0,0,189,217,0,108.5,86.65],[189,0,189,217,0,108.5,86.65],[378,0,189,217,0,108.5,86.65],[567,0,189,217,0,108.5,86.65],[756,0,189,217,0,108.5,86.65],[0,217,189,217,0,108.5,86.65],[189,217,189,217,0,108.5,86.65],[378,217,189,217,0,108.5,86.65],[567,217,189,217,0,108.5,86.65],[756,217,189,217,0,108.5,86.65],[0,434,189,217,0,108.5,86.65],[189,434,189,217,0,108.5,86.65]],
+        animations: { run: [0, 11, "run", 4] }
     });
 
     this.run = new createjs.BitmapAnimation(this.spriteSheet_run);
-    this.run.x = 400;
-    this.run.y = 300;
+    this.run.regY = 63;
 
-    this.spriteSheet_jump = new createjs.SpriteSheet({images: ["images/kisuke_jump.png"], frames: [[0,0,120,234,0,-79.2,99.8]],
-        animations: { jump: [0, "jump", null] }
+    this.spriteSheet_jump = new createjs.SpriteSheet({
+        images: ["images/kisuke_jump.png"],
+        frames: [[0,0,120,234,0,-79.2,99.8]],
+        animations: { jump: [0, "jump", 4] }
     });
 
     this.jump = new createjs.BitmapAnimation(this.spriteSheet_jump);
-    this.jump.x = 400;
-    this.jump.y = 300;
     this.jump.regX = 140;
+    this.jump.regY = 68;
     this.jump.currentFrame = 0;
 
     this.playerContainer = new createjs.Container();
@@ -34,80 +40,74 @@ var Player = function() {
 
 var p = Player.prototype;
 
+p.updatePositions = function(x, y) {
+    this.idle.x = x;
+    this.idle.y = y;
+    this.run.x = x;
+    this.run.y = y;
+    this.jump.x = x;
+    this.jump.y = y;
+};
+
 p.drawPlayer = function() {
     this.playerContainer.addChild(this.idle);
 
-    this.idle.play();
+    this.idle.gotoAndPlay('idle');
 };
 
-p.movePlayer = function(direction, isKeyDown) {
+p.animateIdle = function() {
 
-    this.lastDirection = direction;
+    if (this.playerContainer.contains(this.run) || PG.playerBody.jumpContacts > 0) {
 
-    if (isKeyDown) {
+        console.log('idle')
+        this.playerContainer.removeAllChildren();
+        this.playerContainer.addChild(this.idle);
 
-        if (direction == 'up') {
-            if (this.playerContainer.contains(this.idle) || this.playerContainer.contains(this.run)) {
-                console.log('goto up')
-                this.playerContainer.removeAllChildren();
-                this.playerContainer.addChild(this.jump);
-                this.jump.play('jump');
-            }
+        if (this.lastDirection == 'left') {
+            this.idle.scaleX = -1;
+
+        }
+        if (this.lastDirection == 'right') {
+            this.idle.scaleX = 1;
         }
 
-        if (direction == 'left' || direction == 'right') {
-            if (this.playerContainer.contains(this.idle) || this.playerContainer.contains(this.jump)) {
-                this.playerContainer.removeAllChildren();
-                this.playerContainer.addChild(this.run);
-
-                if (direction == 'left') {
-                    console.log('goto left')
-                    this.run.gotoAndPlay('run');
-                }
-                if (direction == 'right') {
-                    console.log('goto right')
-                    this.run.gotoAndPlay('run');
-                }
-            }
-        }
-
-        if (direction == 'left') {
-            this.run.scaleX = -1;
-            createjs.Tween.get(this.run, {override:true}).to({ x: this.run.x - 250, y: this.run.y }, 500);
-        }
-
-        if (direction == 'right') {
-            console.log('tween right')
-            this.run.scaleX = 1;
-            createjs.Tween.get(this.run, {override:true}).to({ x: this.run.x + 250, y: this.run.y }, 500);
-        }
+        this.idle.play();
     }
-
-    if (!isKeyDown) {
-        if (this.playerContainer.contains(this.run)) {
-
-            if (createjs.Tween.hasActiveTweens(this.run)) {
-                createjs.Tween.removeTweens(this.run);
-            }
-            this.playerContainer.removeChild(this.run);
-            this.playerContainer.addChild(this.idle)
-
-            if (direction == 'left') {
-                this.idle.scaleX = -1;
-
-            }
-            if (direction == 'right') {
-                this.idle.scaleX = 1;
-            }
-
-            this.idle.play();
-        }
-    }
-
-    this.idle.x = this.run.x;
-    this.idle.y = this.run.y;
-    this.jump.x = this.run.x;
-    this.jump.y = this.run.y;
 };
 
+p.animateLeft = function() {
+    this.lastDirection = 'left';
 
+    if (this.playerContainer.contains(this.idle)) {
+        this.playerContainer.removeAllChildren();
+        this.playerContainer.addChild(this.run);
+
+        this.run.gotoAndPlay('run');
+    }
+
+    this.run.scaleX = this.jump.scaleX = -1;
+};
+
+p.animateRight = function() {
+    this.lastDirection = 'right';
+
+    if (this.playerContainer.contains(this.idle)) {
+        this.playerContainer.removeAllChildren();
+        this.playerContainer.addChild(this.run);
+
+        this.run.gotoAndPlay('run');
+
+    }
+
+    this.run.scaleX = this.jump.scaleX = 1;
+};
+
+p.animateJump = function() {
+    if (this.playerContainer.contains(this.idle) || this.playerContainer.contains(this.run)) {
+
+        this.playerContainer.removeAllChildren();
+        this.playerContainer.addChild(this.jump);
+
+        this.jump.play('jump');
+    }
+};
