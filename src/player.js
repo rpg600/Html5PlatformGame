@@ -4,7 +4,7 @@ var Player = function() {
     this.spriteSheet_idle = new createjs.SpriteSheet({
         images: ["images/kisuke_idle_weapon.png"],
         frames: [[0,0,50,103,0,0,0],[50,0,50,103,0,0],[100,0,50,103,0,0],[150,0,50,103,0,0,0],[200,0,50,103,0,0,0],[0,103,50,103,0,0,0],[50,103,50,103,0,0,0],[100,103,50,103,0,0,0],[150,103,50,103,0,0,0]],
-        animations: { idle: [0, 8, "idle", 2] }
+        animations: { idle: [0, 8, "idle", 3] }
     });
 
     this.idle = new createjs.BitmapAnimation(this.spriteSheet_idle);
@@ -15,7 +15,7 @@ var Player = function() {
     this.spriteSheet_run = new createjs.SpriteSheet({
         images: ["images/kisuke_run_weapon.png"],
         frames: [[0,0,83,96,0,0,0],[83,0,83,96,0,0,0],[166,0,83,96,0,0,0],[0,96,83,96,0,0,0],[83,96,83,96,0,0,0],[166,96,83,96,0,0,0],[0,192,83,96,0,0,0],[83,192,83,96,0,0,0],[166,192,83,96,0,0,0],[0,288,83,96,0,0,0],[83,288,83,96,0,0,0],[166,288,83,96,0,0,0]],
-        animations: { run: [0, 11, "run", 2] }
+        animations: { run: [0, 11, "run", 3] }
     });
 
     this.run = new createjs.BitmapAnimation(this.spriteSheet_run);
