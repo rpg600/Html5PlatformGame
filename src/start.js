@@ -1,6 +1,8 @@
 var PG = {
     canvas: null,
     context: null,
+    debugContext: null,
+    debugCanvans: null,
     stage: null,
     stageContainer: null,
     platFormContainer: null,
@@ -10,14 +12,19 @@ var PG = {
     players: [],
     world: null,
     ground: null,
-    scale: 100,
+    scale: 90,
     localActor: null,
+    debug: true,
 
     tick: function() {
-        PG.stage.update();
+        if (PG.debug) {
+            PG.world.DrawDebugData();
+        }
+
         PG.world.Step(1 / 60,  10, 10);
-        //PG.world.DrawDebugData();
         PG.world.ClearForces();
+
+        PG.stage.update();
 
         for(var i=0, l = PG.players.length; i<l; i++) {
             PG.players[i].update();
@@ -72,45 +79,51 @@ var PG = {
 
 window.onload = function() {
 
-    PG.canvas = document.getElementById('gameView');
-    PG.stage = new createjs.Stage(PG.canvas);
-    PG.context = PG.canvas.getContext('2d');
+    // debug button
+    $('#debug').on('click', function() {
+        PG.debug = PG.debug ? false : true;
+        $('#debugCanvas').toggle();
+    });
 
+    PG.canvas = document.getElementById('canvas');
+    PG.debugCanvas = document.getElementById('debugCanvas');
+    PG.context = PG.canvas.getContext('2d');
+    PG.debugContext = PG.debugCanvas.getContext('2d');
+
+    PG.stage = new createjs.Stage(PG.canvas);
     PG.stage.snapToPixelEnabled = true;
-    PG.canvas.width = 1200;
-    PG.canvas.height = 600;
+
+    PG.canvas.width = PG.debugCanvas.width = 1200;
+    PG.canvas.height = PG.debugCanvas.height =  600;
 
     PG.stageContainer = new createjs.Container();
     PG.stage.addChild(PG.stageContainer);
 
     PG.plateFormContainer = new createjs.Container();
-    PG.platform1 = new createjs.Bitmap("images/plateforme_small.png");
-    PG.platform1.y = 270;
-    PG.plateFormContainer.addChild(PG.platform1);
-    PG.stageContainer.addChild(PG.plateFormContainer);
 
-    PG.playerSkin = new Player();
+    PG.stageContainer.addChild(PG.plateFormContainer);
 
     box2dUtils = new Box2dUtils(PG.scale);  // instancier la classe utilitaire
 
-    PG.world = box2dUtils.createWorld(PG.context); // box2DWorld
+    PG.world = box2dUtils.createWorld(PG.debugContext); // box2DWorld
 
     // Créer le "sol" de notre environnement physique
-    PG.ground = box2dUtils.createBox(PG.world, PG.canvas.width / 2, PG.canvas.height - 10, PG.canvas.width / 2, 10, true, 'ground');
+    PG.ground =  new shapeActor(PG.world, PG.canvas.width / 2, PG.canvas.height - 10, PG.canvas.width / 2, 10, true, 'ground');
+
+    plaftorm1 = new shapeActor(PG.world, 350, 465, 100, 5, true, 'box')
+    plaftorm2 = new shapeActor(PG.world, 800, 330, 200, 10, true, 'box');
 
     /*
-    // Créer 2 box statiques
-    staticBox = box2dUtils.createBox(PG.world, 600, 450, 50, 50, true, 'staticBox');
-    staticBox2 = box2dUtils.createBox(PG.world, 200, 250, 80, 30, true, 'staticBox2');
-
     // Créer 2 ball statiques
     staticBall = box2dUtils.createBall(PG.world, 50, 400, 50, true, 'staticBall');
     staticBall2 = box2dUtils.createBall(PG.world, 500, 150, 60, true, 'staticBall2');
     */
 
+    PG.playerSkin = new Player();
+
     PG.playerBody = new PlayerBody(PG.scale);
 
-    PG.playerBody.createPlayer(PG.world, 100, PG.canvas.height - 40, 40);
+    PG.playerBody.createPlayer(PG.world, 200, PG.canvas.height - 100, 40);
 
     PG.localActor = new Actor(PG.playerBody, PG.playerSkin, true);
 
@@ -170,7 +183,7 @@ document.onkeyup= function(event) {
         // up
         case 38:
             console.log('up')
-            PG.localActor.stop();
+            PG.localActor.stopJump();
             break;
         // down
         case 40:

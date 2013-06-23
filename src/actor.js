@@ -28,7 +28,13 @@ var Actor = function(body, skin, local) {
 
     this.stop = function() {
 
-        this.body.setFriction(50);
+        this.body.setFriction(100);
+        this.skin.animateIdle();
+    };
+
+    this.stopJump = function() {
+
+        this.body.setFriction(0);
         this.skin.animateIdle();
     };
 

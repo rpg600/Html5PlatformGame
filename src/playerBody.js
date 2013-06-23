@@ -31,7 +31,7 @@
          */
         jump : function() {
             if (this.jumpContacts > 0) {
-                this.object.GetBody().ApplyImpulse(new b2Vec2(0, -7), this.object.GetBody().GetWorldCenter());
+                this.object.GetBody().ApplyImpulse(new b2Vec2(0, -9), this.object.GetBody().GetWorldCenter());
             }
         },
 

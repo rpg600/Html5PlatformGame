@@ -3,33 +3,34 @@ var Player = function() {
 
     this.spriteSheet_idle = new createjs.SpriteSheet({
         images: ["images/kisuke_idle_weapon.png"],
-        frames: [[0,0,114,234,0,-85.3,102.55],[114,0,114,234,0,-85.3,102.55],[228,0,114,234,0,-85.3,102.55],[342,0,114,234,0,-85.3,102.55],[0,234,114,234,0,-85.3,102.55],[114,234,114,234,0,-85.3,102.55],[228,234,114,234,0,-85.3,102.55],[342,234,114,234,0,-85.3,102.55],[0,468,114,234,0,-85.3,102.55]],
-        animations: { idle: [0, 8, "idle", 4] }
+        frames: [[0,0,50,103,0,0,0],[50,0,50,103,0,0],[100,0,50,103,0,0],[150,0,50,103,0,0,0],[200,0,50,103,0,0,0],[0,103,50,103,0,0,0],[50,103,50,103,0,0,0],[100,103,50,103,0,0,0],[150,103,50,103,0,0,0]],
+        animations: { idle: [0, 8, "idle", 2] }
     });
 
     this.idle = new createjs.BitmapAnimation(this.spriteSheet_idle);
-    this.idle.regX = 140;
-    this.idle.regY = 68;
+    this.idle.regX = 25;
+    this.idle.regY = 52;
     this.idle.currentFrame = 0;
 
     this.spriteSheet_run = new createjs.SpriteSheet({
         images: ["images/kisuke_run_weapon.png"],
-        frames: [[0,0,189,217,0,108.5,86.65],[189,0,189,217,0,108.5,86.65],[378,0,189,217,0,108.5,86.65],[567,0,189,217,0,108.5,86.65],[756,0,189,217,0,108.5,86.65],[0,217,189,217,0,108.5,86.65],[189,217,189,217,0,108.5,86.65],[378,217,189,217,0,108.5,86.65],[567,217,189,217,0,108.5,86.65],[756,217,189,217,0,108.5,86.65],[0,434,189,217,0,108.5,86.65],[189,434,189,217,0,108.5,86.65]],
-        animations: { run: [0, 11, "run", 4] }
+        frames: [[0,0,83,96,0,0,0],[83,0,83,96,0,0,0],[166,0,83,96,0,0,0],[0,96,83,96,0,0,0],[83,96,83,96,0,0,0],[166,96,83,96,0,0,0],[0,192,83,96,0,0,0],[83,192,83,96,0,0,0],[166,192,83,96,0,0,0],[0,288,83,96,0,0,0],[83,288,83,96,0,0,0],[166,288,83,96,0,0,0]],
+        animations: { run: [0, 11, "run", 2] }
     });
 
     this.run = new createjs.BitmapAnimation(this.spriteSheet_run);
-    this.run.regY = 63;
+    this.run.regX = 42;
+    this.run.regY = 48;
 
     this.spriteSheet_jump = new createjs.SpriteSheet({
         images: ["images/kisuke_jump.png"],
-        frames: [[0,0,120,234,0,-79.2,99.8]],
-        animations: { jump: [0, "jump", 4] }
+        frames: [[0,0,53,103,0,0,0]],
+        animations: { jump: [0, "jump", 2] }
     });
 
     this.jump = new createjs.BitmapAnimation(this.spriteSheet_jump);
-    this.jump.regX = 140;
-    this.jump.regY = 68;
+    this.jump.regX = 26;
+    this.jump.regY = 50;
     this.jump.currentFrame = 0;
 
     this.playerContainer = new createjs.Container();
@@ -51,7 +52,6 @@ p.updatePositions = function(x, y) {
 
 p.drawPlayer = function() {
     this.playerContainer.addChild(this.idle);
-
     this.idle.gotoAndPlay('idle');
 };
 

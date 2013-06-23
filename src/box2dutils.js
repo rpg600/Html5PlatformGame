@@ -32,7 +32,7 @@ var b2MouseJointDef =  Box2D.Dynamics.Joints.b2MouseJointDef;
          */
         createWorld : function(context) {
             var world = new b2World(
-                new b2Vec2(0, 10), // gravité
+                new b2Vec2(0, 15), // gravité
                 true // doSleep
             );
 
@@ -160,7 +160,7 @@ var b2MouseJointDef =  Box2D.Dynamics.Joints.b2MouseJointDef;
             footDef.friction = 0;
             footDef.userData = 'footPlayer';
             footDef.shape = new b2PolygonShape();
-            footDef.shape.SetAsOrientedBox(20 / PG.scale, 20  /PG.scale,
+            footDef.shape.SetAsOrientedBox(18 / PG.scale, 20  /PG.scale,
                 new b2Vec2(0, radius / 1.8 /PG.scale),   // position par rapport centre du body
                 0                                           // angle d'orientation
             );

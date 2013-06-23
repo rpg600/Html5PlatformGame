@@ -16,11 +16,27 @@ canvas {
     width: 1200px;
 }
 
-#gameView, img {
-    image-rendering: optimizeSpeed;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: optimize-contrast;
-    -ms-interpolation-mode: nearest-neighbor;
-    display: inline-block;
+#canvas, img {
+    z-index: 1;
+    position: absolute;
+}
+
+#debugCanvas {
+    z-index: 2;
+    position: absolute;
+}
+
+#debug {
+    display: block;
+}
+
+.button {
+    position: absolute;
+    top: 660px;
+    width: 250px;
+    height: 25px;
+    background-color: #5fd644;
+    cursor: pointer;
+    text-align: center;
+    padding-top:5px;
 }

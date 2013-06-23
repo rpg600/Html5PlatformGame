@@ -3,17 +3,21 @@
 <head>
     <title>Game</title>
     <link href="css/game.css" rel="stylesheet" type="text/css" />
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="lib/Box2dWeb-2.1.a.3.min.js"></script>
     <script src="lib/createjs-2013.05.14.min.js"></script>
     <script src="src/box2dutils.js"></script>
     <script src="src/playerBody.js"></script>
+    <script src="src/shapeActor.js"></script>
     <script src="src/actor.js"></script>
     <script src="src/player.js"></script>
     <script src="src/start.js"></script>
 </head>
 <body>
     <div id="appEngine">
-        <canvas id="gameView" oncontextmenu="return false;"></canvas>
+        <canvas id="canvas" oncontextmenu="return false;"></canvas>
+        <canvas id="debugCanvas"></canvas>
+        <div id="debug" class="button">Show/Hide Debug</div>
     </div>
 </body>
 </html>
