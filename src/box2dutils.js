@@ -73,7 +73,7 @@ var b2MouseJointDef =  Box2D.Dynamics.Joints.b2MouseJointDef;
             switch (type) {
                 case 'box':
                     fixDef.shape = new b2PolygonShape();
-                    fixDef.shape.SetAsBox(dimensions.width / this.SCALE, dimensions.height / this.SCALE);
+                    fixDef.shape.SetAsBox(dimensions.width / this.SCALE / 2, dimensions.height / this.SCALE / 2);
                     break;
                 case 'ball':
                     fixDef.shape = new b2CircleShape(dimensions.radius / this.SCALE);

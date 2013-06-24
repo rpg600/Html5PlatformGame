@@ -25,7 +25,7 @@ var Player = function() {
     this.spriteSheet_jump = new createjs.SpriteSheet({
         images: ["images/kisuke_jump.png"],
         frames: [[0,0,53,103,0,0,0]],
-        animations: { jump: [0, "jump", 2] }
+        animations: { jump: [0, "jump", null] }
     });
 
     this.jump = new createjs.BitmapAnimation(this.spriteSheet_jump);

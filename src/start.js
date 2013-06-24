@@ -108,10 +108,11 @@ window.onload = function() {
     PG.world = box2dUtils.createWorld(PG.debugContext); // box2DWorld
 
     // Créer le "sol" de notre environnement physique
-    PG.ground =  new shapeActor(PG.world, PG.canvas.width / 2, PG.canvas.height - 10, PG.canvas.width / 2, 10, true, 'ground');
+    PG.ground =  new shapeActor(PG.world, PG.canvas.width / 2, PG.canvas.height - 10, PG.canvas.width, 20, true, 'ground');
 
-    plaftorm1 = new shapeActor(PG.world, 350, 465, 100, 5, true, 'box')
-    plaftorm2 = new shapeActor(PG.world, 800, 330, 200, 10, true, 'box');
+    plaftorm1 = new shapeActor(PG.world, 350, 465, 200, 20, true, 'box')
+    plaftorm2 = new shapeActor(PG.world, 800, 330, 400, 20, true, 'box');
+    plaftorm3 = new shapeActor(PG.world, 250, 180, 400, 20, true, 'box');
 
     /*
     // Créer 2 ball statiques
