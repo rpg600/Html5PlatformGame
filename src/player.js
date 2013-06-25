@@ -33,6 +33,22 @@ var Player = function() {
     this.jump.regY = 50;
     this.jump.currentFrame = 0;
 
+
+    this.spriteSheet_attack_1 = new createjs.SpriteSheet({
+        images: ["images/kisuke_attack_1.png"],
+        frames: [[0,0,144,155,0,0,0],[144,0,144,155,0,0,0],[288,0,144,155,0,0,0],[0,155,144,155,0,0,0],[144,155,144,155,0,0,0]],
+        animations: { attack_1: [0, 4, false, 2] }
+    });
+
+    this.attack_1 = new createjs.BitmapAnimation(this.spriteSheet_attack_1);
+    this.attack_1.regX = 26;
+    this.attack_1.regY = 100;
+    this.attack_1.currentFrame = 0;
+
+    this.attack_1.addEventListener('animationend', function() {
+       this.animateIdle();
+    }.bind(this));
+
     this.playerContainer = new createjs.Container();
     PG.stageContainer.addChild(this.playerContainer);
 
@@ -48,6 +64,8 @@ p.updatePositions = function(x, y) {
     this.run.y = y;
     this.jump.x = x;
     this.jump.y = y;
+    this.attack_1.x = x;
+    this.attack_1.y = y;
 };
 
 p.drawPlayer = function() {
@@ -56,8 +74,7 @@ p.drawPlayer = function() {
 };
 
 p.animateIdle = function() {
-
-    if (this.playerContainer.contains(this.run) || PG.playerBody.jumpContacts > 0) {
+    if (this.playerContainer.contains(this.run) || this.playerContainer.contains(this.attack_1) || PG.playerBody.jumpContacts > 0) {
 
         console.log('idle')
         this.playerContainer.removeAllChildren();
@@ -110,4 +127,20 @@ p.animateJump = function() {
 
         this.jump.play('jump');
     }
+};
+
+p.animateAttack1 = function() {
+
+    if (this.lastDirection == 'left') {
+        this.attack_1.scaleX = -1;
+
+    }
+    if (this.lastDirection == 'right') {
+        this.attack_1.scaleX = 1;
+    }
+
+
+    this.playerContainer.removeAllChildren();
+    this.playerContainer.addChild(this.attack_1);
+    this.attack_1.gotoAndPlay('attack_1');
 };

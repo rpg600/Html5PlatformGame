@@ -138,6 +138,11 @@ window.onload = function() {
 document.onkeydown = function(event) {
     keyCode = event.keyCode;
     switch(keyCode) {
+        // A
+        case 65:
+            console.log('Attack 1')
+            PG.localActor.attack1();
+            break;
         // left
         case 37:
             console.log('left')

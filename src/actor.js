@@ -38,5 +38,10 @@ var Actor = function(body, skin, local) {
         this.skin.animateIdle();
     };
 
+    this.attack1 = function() {
+
+        this.skin.animateAttack1();
+    };
+
     PG.players.push(this);
 };

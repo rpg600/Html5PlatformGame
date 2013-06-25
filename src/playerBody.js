@@ -41,7 +41,7 @@
         moveRight : function() {
             this.setFriction(0);
             var vel = this.object.GetBody().GetLinearVelocity();
-            vel.x = 350 / this.scale;
+            vel.x = 400 / this.scale;
         },
 
         /**
@@ -50,7 +50,7 @@
         moveLeft : function() {
             this.setFriction(0);
             var vel = this.object.GetBody().GetLinearVelocity();
-            vel.x = -350 / this.scale;
+            vel.x = -400 / this.scale;
         },
 
         setFriction: function(friction) {
